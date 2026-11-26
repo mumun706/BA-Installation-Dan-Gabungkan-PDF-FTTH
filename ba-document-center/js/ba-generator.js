@@ -16,16 +16,24 @@
   // Buang satuan yang ikut diketik karena sudah tercetak di template.
   const number = (name) => value(name).replace(/\s*(dbm|meter|titik|rumah|m)$/i, "");
 
+   // "2026-11-26" menjadi "Kamis, 26 November 2026"
+  function formatTanggal(iso) {
+    if (!iso) return "";
+    const [y, m, d] = iso.split("-").map(Number);
+    return new Intl.DateTimeFormat("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+      .format(new Date(y, m - 1, d));
+  }
+
   function readData() {
     const data = {};
     ["nomor", "tanggal", "wo", "nama", "ktp", "alamat", "telp", "ioh", "amt",
       "ttdPelanggan", "ttdIoh", "ttdAmt"].forEach((k) => { data[k] = value(k); });
     ["fat", "panjang", "tiang", "rumah", "ont"].forEach((k) => { data[k] = number(k); });
+    data.tanggal = formatTanggal(data.tanggal);
     data.relaks = checks("relaks");
     data.lampiran = checks("lampiran");
     return data;
   }
-
   /* ---------- Peringatan (tidak memblokir) ---------- */
   function opticalWarning(name, limit) {
     const text = number(name).replace(",", ".").replace("−", "-");
