@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1c2a4a">
+  <title>BA Document Center</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#beranda">
+      <span class="brand-mark">BA</span>
+      <span><strong>Document Center</strong><small>Asianet · FTTH</small></span>
+    </a>
+    <nav class="nav" aria-label="Menu utama">
+      <a href="#beranda" data-nav="beranda">Beranda</a>
+      <a href="#ba" data-nav="ba">BA Generator</a>
+      <a href="#scanner" data-nav="scanner">Scanner &amp; Merger</a>
+    </nav>
+    <span class="local-pill">Diproses di perangkat</span>
+  </header>
+
+  <main class="container">
+    <noscript><p class="note">Aktifkan JavaScript untuk memakai aplikasi ini.</p></noscript>
+
+    <section class="view" data-view="beranda">
+      <h1 tabindex="-1">Mau mengerjakan apa?</h1>
+      <p class="lead">Dokumen diproses di perangkat Anda dan tidak dikirim ke server.</p>
+      <div class="menu">
+        <a class="card" href="#ba">
+          <span class="card-title">BA Generator</span>
+          <span class="card-text">Isi BA Persetujuan Instalasi Relaksasi (Non-Standar), lalu unduh PDF.</span>
+          <span class="card-action">Buka &rarr;</span>
+        </a>
+        <a class="card" href="#scanner">
+          <span class="card-title">Document Scanner &amp; PDF Merger</span>
+          <span class="card-text">Rapikan foto dokumen dan gabungkan dengan PDF menjadi satu file.</span>
+          <span class="card-action">Buka &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="view" data-view="ba" id="view-ba" hidden>
+      <div class="ba-layout">
+        <div class="panel">
+          <div class="panel-head">
+            <div><p class="kicker">TAHAP 1</p><h1 tabindex="-1">Isi data BA Non-Standar</h1></div>
+            <span class="badge">Template 2 halaman</span>
+          </div>
+          <p class="info"><strong>Catatan:</strong> Isi hanya kolom yang tersedia. ID FAT/ODP dan koordinat tetap kosong sesuai kesepakatan. Area tanda tangan tidak diisi otomatis.</p>
+          <form id="ba-form" novalidate>
+            <fieldset>
+              <legend><span class="num">01</span> Identitas BA</legend>
+              <label>Nomor BA<input name="nomor" type="text" autocomplete="off" placeholder="Masukkan nomor BA" maxlength="60"></label>
+              <label>Hari / Tanggal<input name="tanggal" type="text" autocomplete="off" placeholder="Contoh: Kamis, 26 November 2026" maxlength="60"></label>
+              <label class="full">Nomor Work Order (WO)<input name="wo" type="text" autocomplete="off" placeholder="Masukkan nomor WO" maxlength="60"></label>
+            </fieldset>
+            <fieldset>
+              <legend><span class="num">02</span> Data Pelanggan</legend>
+              <label>Nama lengkap<input name="nama" type="text" autocomplete="off" placeholder="Nama sesuai identitas" maxlength="70"></label>
+              <label>Nomor Identitas (KTP)<input name="ktp" type="text" autocomplete="off" placeholder="Nomor KTP" inputmode="numeric" maxlength="20"></label>
+              <label class="full">Alamat instalasi<input name="alamat" type="text" autocomplete="off" placeholder="Alamat lengkap" maxlength="160"></label>
+              <label class="full">Nomor telepon<input name="telp" type="text" autocomplete="off" placeholder="Nomor telepon" inputmode="tel" maxlength="30"></label>
+            </fieldset>
+            <fieldset>
+              <legend><span class="num">03</span> Perwakilan</legend>
+              <label>Nama / Jabatan IOH<input name="ioh" type="text" autocomplete="off" placeholder="Nama / jabatan" maxlength="80"></label>
+              <label>Nama / Jabatan AMT<input name="amt" type="text" autocomplete="off" placeholder="Nama / jabatan" maxlength="80"></label>
+            </fieldset>
+            <fieldset>
+              <legend><span class="num">04</span> Jenis Relaksasi</legend>
+              <label class="check full"><input type="checkbox" name="relaks"><span>Penggunaan tiang pihak lain / tiang PJU / fasilitas umum (tiang PJU maksimal 3 titik; izin RT/RW terlampir)</span></label>
+              <label class="check full"><input type="checkbox" name="relaks"><span>Multiring / melintas atap rumah warga (maksimal 3 rumah yang dilalui; alur huruf L dengan maksimal 1 belokan; izin tertulis pemilik rumah terlampir)</span></label>
+              <label class="check full"><input type="checkbox" name="relaks"><span>Instalasi di luar boundary / OSCA (Outside Service Coverage Area)</span></label>
+              <label class="check full"><input type="checkbox" name="relaks"><span>Rute kabel &gt; 250 meter dengan tiang AMT kontinu sepanjang rute</span></label>
+            </fieldset>
+            <fieldset>
+              <legend><span class="num">05</span> Data Teknis</legend>
+              <div><label>Daya optik di port FAT/ODP (dBm)<input name="fat" type="text" autocomplete="off" placeholder="Contoh: -18,5" maxlength="10"></label><p class="warn" id="warn-fat" aria-live="polite"></p></div>
+              <label>Panjang rute kabel dropwire (meter)<input name="panjang" type="text" autocomplete="off" placeholder="Contoh: 150" inputmode="decimal" maxlength="10"></label>
+              <label>Jumlah tiang pihak lain / PJU (titik)<input name="tiang" type="text" autocomplete="off" placeholder="Contoh: 2" inputmode="numeric" maxlength="6"></label>
+              <label>Jumlah rumah yang dilalui (rumah)<input name="rumah" type="text" autocomplete="off" placeholder="Contoh: 1" inputmode="numeric" maxlength="6"></label>
+              <div class="full"><label>Daya terima ONT saat aktivasi (dBm)<input name="ont" type="text" autocomplete="off" placeholder="Contoh: -22" maxlength="10"></label><p class="warn" id="warn-ont" aria-live="polite"></p></div>
+            </fieldset>
+            <fieldset>
+              <legend><span class="num">06</span> Lampiran</legend>
+              <label class="check full"><input type="checkbox" name="lampiran"><span>Surat izin / berita acara RT/RW setempat</span></label>
+              <label class="check full"><input type="checkbox" name="lampiran"><span>Surat izin tertulis pemilik rumah yang dilalui kabel (untuk multiring / melintas atap)</span></label>
+              <label class="check full"><input type="checkbox" name="lampiran"><span>Sketsa / foto jalur kabel dari FAT/ODP ke lokasi pelanggan</span></label>
+              <label class="check full"><input type="checkbox" name="lampiran"><span>Foto hasil pengukuran daya optik di FAT/ODP dan ONT</span></label>
+            </fieldset>
+            <fieldset>
+              <legend><span class="num">07</span> Nama di bagian tanda tangan</legend>
+              <p class="hint full">Terisi otomatis, bisa diubah. Hanya nama, bukan tanda tangan.</p>
+              <label class="full">Pelanggan<input name="ttdPelanggan" type="text" autocomplete="off" placeholder="Nama jelas" maxlength="70"></label>
+              <label>IOH<input name="ttdIoh" type="text" autocomplete="off" placeholder="Nama &amp; jabatan" maxlength="80"></label>
+              <label>AMT<input name="ttdAmt" type="text" autocomplete="off" placeholder="Nama &amp; jabatan" maxlength="80"></label>
+            </fieldset>
+          </form>
+          <label class="upload">Nama file<input id="ba-filename" type="text" autocomplete="off" placeholder="Otomatis dari Nomor BA dan nama"></label>
+          <p class="warn" id="ba-missing"></p>
+          <div class="buttons">
+            <button type="button" class="button secondary" id="ba-preview">Preview</button>
+            <button type="button" class="button" id="ba-download">Unduh PDF</button>
+          </div>
+          <p class="hint" id="ba-status" aria-live="polite"></p>
+          <div id="ba-pages"></div>
+        </div>
+        <aside>
+          <div class="panel">
+            <h2>Template resmi</h2>
+            <p class="hint">PDF BA NON-STANDAR asli digunakan sebagai dasar dokumen. Teks dan checklist ditambahkan pada area yang disepakati.</p>
+            <p class="file-chip"><b>PDF</b><span><strong>BA NON-STANDAR</strong><br>2 halaman · A4</span></p>
+          </div>
+          <div class="panel">
+            <h2>Alur penggunaan</h2>
+            <ol class="flow">
+              <li><strong>Isi formulir</strong>Lengkapi data BA dan pilih checklist.</li>
+              <li><strong>Unduh PDF</strong>Periksa hasil dokumen.</li>
+              <li><strong>Cetak &amp; tanda tangan</strong>Tanda tangan basah oleh pihak berwenang.</li>
+              <li><strong><a href="#scanner">Scan &amp; gabungkan</a></strong>Satukan dengan dokumen pendukung.</li>
+            </ol>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" data-view="scanner" id="view-scanner" hidden>
+      <h1 tabindex="-1">Document Scanner &amp; PDF Merger</h1>
+      <div class="pickers">
+        <label class="button pick">Ambil Foto
+          <input id="mg-camera" type="file" accept="image/*" capture="environment">
+        </label>
+        <label class="button secondary pick">Pilih File (JPG, PNG, PDF)
+          <input id="mg-files" type="file" multiple accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf">
+        </label>
+      </div>
+      <p class="hint">Setelah memotret, layar potong terbuka otomatis. Untuk gambar lain, tekan "Potong". Atur urutan dengan tombol panah.</p>
+      <p class="hint" id="mg-status" aria-live="polite"></p>
+      <ol id="mg-list"></ol>
+      <div id="mg-output" hidden>
+        <label class="upload">Nama file hasil
+          <input id="mg-filename" type="text" value="Dokumen_Gabungan" autocomplete="off">
+        </label>
+        <div class="buttons">
+          <button type="button" class="button secondary" id="mg-make">Preview hasil</button>
+          <button type="button" class="button" id="mg-download">Unduh PDF</button>
+          <button type="button" class="button secondary" id="mg-clear">Hapus semua</button>
+        </div>
+        <div id="mg-preview"></div>
+      </div>
+
+      <dialog id="sc-editor" aria-label="Edit gambar">
+        <p class="hint">Geser 4 titik ke sudut dokumen.</p>
+        <div id="sc-stage">
+          <div id="sc-source"></div>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon id="sc-polygon"/></svg>
+          <button type="button" class="handle" aria-label="Sudut kiri atas"></button>
+          <button type="button" class="handle" aria-label="Sudut kanan atas"></button>
+          <button type="button" class="handle" aria-label="Sudut kanan bawah"></button>
+          <button type="button" class="handle" aria-label="Sudut kiri bawah"></button>
+        </div>
+        <p class="error" id="sc-message" aria-live="polite"></p>
+        <div class="buttons">
+          <button type="button" class="button secondary" id="sc-left">Putar kiri</button>
+          <button type="button" class="button secondary" id="sc-right">Putar kanan</button>
+          <button type="button" class="button secondary" id="sc-reset">Reset</button>
+        </div>
+        <label class="control">Brightness<input id="sc-brightness" type="range" min="-50" max="50"></label>
+        <label class="control">Contrast<input id="sc-contrast" type="range" min="-50" max="80"></label>
+        <label class="control">Filter
+          <select id="sc-filter">
+            <option value="asli">Asli</option>
+            <option value="warna">Warna tajam</option>
+            <option value="abu">Abu-abu</option>
+            <option value="hp">Hitam putih</option>
+          </select>
+        </label>
+        <h2>Preview hasil scan</h2>
+        <div id="sc-result"></div>
+        <div class="buttons sticky">
+          <button type="button" class="button secondary" id="sc-cancel">Batal</button>
+          <button type="button" class="button" id="sc-save">Simpan</button>
+        </div>
+      </dialog>
+    </section>
+  </main>
+
+  <footer class="footer">Pekerjaan tidak disimpan. Unduh hasilnya sebelum menutup halaman.</footer>
+
+  <script src="js/app.js"></script>
+  <script src="vendor/pdf-lib/pdf-lib.min.js"></script>
+  <script src="js/template-data.js"></script>
+  <script src="js/ba-template.js"></script>
+  <script src="js/ba-generator.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/pdf-merger.js"></script>
+</body>
+</html>
